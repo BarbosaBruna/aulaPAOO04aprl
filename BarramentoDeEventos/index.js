@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const axios = require('axios')
 const app = express()
@@ -6,9 +7,11 @@ app.use(express.json())
 // app.get('', (req, res) => {
 
 // })
+const { BARRAMENTO_PORTA } = process.env
 
 app.post('/eventos', (req, res) => {
     const evento = req.body
+    console.log(evento)
 
     // direcionando o evento para o mss de lembretes
     axios.post('http://localhost:4000/eventos', evento)
@@ -16,8 +19,8 @@ app.post('/eventos', (req, res) => {
     // // direcionando o evento para o mss de observacoes
     axios.post('http://localhost:5000/eventos', evento)
 
-    res.status(200).send({msg: 'ok'})
+    res.status(200).send({ msg: 'ok' })
 
 })
 
-app.listen(1000, () => console.log("Barramento PORT 1000"))
+app.listen(BARRAMENTO_PORTA, () => console.log(`Barramento.PORT ${BARRAMENTO_PORTA}`))
